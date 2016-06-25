@@ -14,6 +14,7 @@ Shows how to control GoogleScraper programmatically.
 import sys
 from GoogleScraper import scrape_with_config, GoogleSearchError
 from GoogleScraper.database import ScraperSearch, SERP, Link
+import json
 
 def run_crawler(searchString, jsonFileName):
     # See in the config.cfg file for possible values
@@ -40,6 +41,19 @@ def run_crawler(searchString, jsonFileName):
         print("GoogleSearchError")
         print(e)
 
+def read_json(jsonFileName):
+
+    data = json.load(open(jsonFileName))
+    desc = []
+    link = []
+
+    for item1 in data:
+        for item in item1['results']:
+            link.append(item['link'])
+            desc.append(item['title'])
+
+    return link, desc
+
 
 ### MAIN FUNCTION ###
 if __name__ == '__main__':
@@ -52,7 +66,10 @@ if __name__ == '__main__':
         jsonFileName = sys.argv[2]
         print("Basic text search using Selenium Crawler <><> ")
         run_crawler(queryString, jsonFileName)
+        link, desc = read_json(jsonFileName)
 
+        for index in range(len(link)):
+            print(link[index], desc[index])
 
 
 
