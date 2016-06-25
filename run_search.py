@@ -46,13 +46,15 @@ def read_json(jsonFileName):
     data = json.load(open(jsonFileName))
     desc = []
     link = []
+    snip = []
 
     for item1 in data:
         for item in item1['results']:
             link.append(item['link'])
             desc.append(item['title'])
+            snip.append(item['snippet'])
 
-    return link, desc
+    return link, desc, snip
 
 
 ### MAIN FUNCTION ###
